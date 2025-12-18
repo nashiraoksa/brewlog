@@ -7,10 +7,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import EditRoasteryDialog from "../edit-dialog";
+
+import { COUNTRIES } from "@/lib/constants/countries";
+import { DeleteConfirm } from "../delete-confirm";
 import { Roastery } from "@/types/roastery";
+
+const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map((c) => [c.code, c.name]));
 
 export const columns: ColumnDef<Roastery, any>[] = [
   {
@@ -37,32 +42,52 @@ export const columns: ColumnDef<Roastery, any>[] = [
     header: "City",
   },
   {
-    id: "country",
-    accessorFn: (row) => row.country,
+    accessorKey: "country",
     header: "Country",
+    cell: ({ getValue }) => {
+      const code = getValue<string>();
+      return COUNTRY_MAP[code] ?? code;
+    },
   },
   {
     id: "actions",
-    cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
-            size="icon"
-          >
-            <IconDotsVertical />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-32">
-          <DropdownMenuItem>Edit</DropdownMenuItem>
-          <DropdownMenuItem>Make a copy</DropdownMenuItem>
-          <DropdownMenuItem>Favorite</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+    cell: ({ row, table }) => {
+      const onDelete = table.options.meta?.onDelete as (id: string) => void;
+
+      return (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="ghost" size="icon">
+              <IconDotsVertical />
+            </Button>
+          </DropdownMenuTrigger>
+
+          <DropdownMenuContent align="end" className="w-32">
+            <EditRoasteryDialog
+              roastery={row.original}
+              trigger={
+                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
+                  Edit
+                </DropdownMenuItem>
+              }
+            />
+
+            <DeleteConfirm
+              itemId={row.original.id}
+              itemName={row.original.name}
+              onDelete={onDelete}
+              trigger={
+                <DropdownMenuItem
+                  onSelect={(e) => e.preventDefault()}
+                  variant="destructive"
+                >
+                  Delete
+                </DropdownMenuItem>
+              }
+            />
+          </DropdownMenuContent>
+        </DropdownMenu>
+      );
+    },
   },
 ];

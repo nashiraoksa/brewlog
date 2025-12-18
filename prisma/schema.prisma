@@ -26,6 +26,7 @@ model User {
   sessions      Session[]
   coffees       Coffee[]
   roastery      Roastery[]
+  grinders      Grinder[]
 }
 
 model Account {
@@ -94,4 +95,22 @@ model Roastery {
   user User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   coffees Coffee[]
+}
+
+enum GrinderType {
+  MANUAL
+  AUTOMATIC
+}
+
+model Grinder {
+  id        String      @id @default(cuid())
+  name      String
+  type      GrinderType
+  details   String?
+
+  userId    String
+  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Future relation:
+  // brews Brew[]
 }

@@ -1,19 +1,26 @@
-type DashboardLayoutProps = Readonly<{
-  title: string;
-  children: React.ReactNode;
-}>;
-
 export default function DashboardLayout({
-  title,
   children,
-}: DashboardLayoutProps) {
+  title,
+  description,
+  rightContent,
+}: {
+  children: React.ReactNode;
+  title: string;
+  description?: string;
+  rightContent?: React.ReactNode;
+}) {
   return (
-    <div className="w-full h-full flex flex-col gap-6 p-6">
-      <header>
-        <h2 className="text-2xl font-semibold text-primary">{title}</h2>
+    <section className="space-y-6">
+      <header className="w-full flex items-end">
+        <section className="w-full flex-col justify-between items-center">
+          <h2 className="text-2xl font-semibold text-foreground text-primary">
+            {title}
+          </h2>
+          <span className="text-foreground opacity-50">{description}</span>
+        </section>
+        {rightContent}
       </header>
-
-      {children}
-    </div>
+      <main>{children}</main>
+    </section>
   );
 }
