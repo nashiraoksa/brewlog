@@ -103,14 +103,18 @@ enum GrinderType {
 }
 
 model Grinder {
-  id        String      @id @default(cuid())
-  name      String
-  type      GrinderType
-  details   String?
+  id            String      @id @default(cuid())
+  name          String
+  type          GrinderType
+  purchase_date DateTime?
+  details       String?
 
-  userId    String
-  user      User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   // Future relation:
-  // brews Brew[]
+  // brews      Brew[]
 }

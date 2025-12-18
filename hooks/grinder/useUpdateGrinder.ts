@@ -1,15 +1,15 @@
 "use client";
 
-import { RoasteryFormValues } from "@/types/roastery";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { GrinderUpdatePayload } from "@/types/grinder";
 
-export function useCreateRoastery() {
+export function useUpdateGrinder() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: RoasteryFormValues) => {
-      const res = await fetch("/api/roastery", {
-        method: "POST",
+    mutationFn: async ({ id, ...data }: GrinderUpdatePayload) => {
+      const res = await fetch(`/api/grinder/${id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -19,14 +19,13 @@ export function useCreateRoastery() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || "Failed to create roastery");
+        throw new Error(err.error || "Failed to update grinder");
       }
 
       return res.json();
     },
-
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["roastery"] });
+      queryClient.invalidateQueries({ queryKey: ["grinder"] });
     },
   });
 }
