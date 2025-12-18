@@ -15,18 +15,19 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  name          String?
-  email         String?  @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
+  id                String   @id @default(cuid())
+  name              String?
+  email             String?  @unique
+  emailVerified     DateTime?
+  password          String?
+  image             String?
 
-  accounts      Account[]
-  sessions      Session[]
-  coffees       Coffee[]
-  roastery      Roastery[]
-  grinders      Grinder[]
+  accounts          Account[]
+  sessions          Session[]
+  coffees           Coffee[]
+  roastery          Roastery[]
+  grinders          Grinder[]
+  espressoMachines  EspressoMachine[]
 }
 
 model Account {
@@ -106,6 +107,28 @@ model Grinder {
   id            String      @id @default(cuid())
   name          String
   type          GrinderType
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Future relation:
+  // brews      Brew[]
+}
+
+enum EspressoMachineType {
+  LEVER
+  AUTOMATIC
+}
+
+model EspressoMachine {
+  id            String      @id @default(cuid())
+  name          String
+  type          EspressoMachineType
   purchase_date DateTime?
   details       String?
 
