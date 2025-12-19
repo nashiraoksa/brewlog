@@ -30,6 +30,7 @@ model User {
   espressoMachines  EspressoMachine[]
   drippers          Dripper[]
   filters           Filter[]
+  kettles           Kettle[]
 }
 
 model Account {
@@ -206,6 +207,28 @@ model Filter {
   name          String
   type          FilterType
   material      FilterMaterial
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Future relation:
+  // brews      Brew[]
+}
+
+enum KettleType {
+  ELECTRIC
+  STOVETOP
+}
+
+model Kettle {
+  id            String      @id @default(cuid())
+  name          String
+  type          KettleType
   purchase_date DateTime?
   details       String?
 
