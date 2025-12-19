@@ -64,6 +64,10 @@ const data = {
           url: "/dashboard/equipments/dripper",
         },
         {
+          title: "Filter",
+          url: "/dashboard/equipments/filter",
+        },
+        {
           title: "Scale",
           url: "/dashboard/equipments/scale",
         },

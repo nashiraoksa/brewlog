@@ -29,6 +29,7 @@ model User {
   grinders          Grinder[]
   espressoMachines  EspressoMachine[]
   drippers          Dripper[]
+  filters           Filter[]
 }
 
 model Account {
@@ -168,6 +169,43 @@ model Dripper {
   name          String
   type          DripperType
   material      DripperMaterial
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Future relation:
+  // brews      Brew[]
+}
+
+enum FilterType {
+  CONE
+  FLATCONE
+  DISK
+  WAVY
+  BASKET
+  SACK
+  OTHER
+}
+
+enum FilterMaterial {
+  PAPER
+  UNBLEACHEDPAPER
+  CLOTH
+  PLASTIC
+  METAL
+  OTHER
+}
+
+model Filter {
+  id            String      @id @default(cuid())
+  name          String
+  type          FilterType
+  material      FilterMaterial
   purchase_date DateTime?
   details       String?
 
