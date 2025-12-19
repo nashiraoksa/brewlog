@@ -24,7 +24,7 @@ export default function RoasteryList() {
 
   return (
     <div className="space-y-6">
-      <div className="w-full flex justify-between">
+      <div className="w-full flex flex-col sm:flex-row justify-between items-end sm:items-center gap-4">
         <SearchInput
           value=""
           onChange={(e) => console.log(e.target.value)}
@@ -36,7 +36,6 @@ export default function RoasteryList() {
           value={view}
           options={viewOptions}
           onValueChange={setView}
-          className="border"
         />
       </div>
 

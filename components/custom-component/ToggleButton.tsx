@@ -22,6 +22,7 @@ export function ToggleButton<T extends string>({
 }: ToggleButtonProps<T>) {
   return (
     <ToggleGroup
+      variant="outline"
       type="single"
       value={value}
       onValueChange={(val) => {

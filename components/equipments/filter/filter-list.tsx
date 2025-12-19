@@ -51,45 +51,47 @@ export default function FilterList() {
 
   return (
     <div className="space-y-6">
-      <div className="w-full flex justify-between items-center">
-        <div className="flex gap-4 flex-wrap">
-          {/* Filter Type */}
-          <Select
-            value={type}
-            onValueChange={(value) => setType(value as FilterType | "all")}
-          >
-            <SelectTrigger className="w-[160px]">
-              <SelectValue placeholder="Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              {FILTER_TYPES.map((type) => (
-                <SelectItem key={type} value={type}>
-                  {type.replace("_", " ")}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      <div className="w-full flex flex-col sm:flex-row justify-between items-end sm:items-center gap-4">
+        <div className="w-full flex flex-col sm:flex-row gap-4">
+          <div className="w-full sm:w-fit flex gap-4">
+            {/* Filter Type */}
+            <Select
+              value={type}
+              onValueChange={(value) => setType(value as FilterType | "all")}
+            >
+              <SelectTrigger className="w-full sm:w-[160px]">
+                <SelectValue placeholder="Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                {FILTER_TYPES.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type.replace("_", " ")}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          {/* Filter Material */}
-          <Select
-            value={material}
-            onValueChange={(value) =>
-              setMaterial(value as FilterMaterial | "all")
-            }
-          >
-            <SelectTrigger className="w-[160px]">
-              <SelectValue placeholder="Material" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Materials</SelectItem>
-              {FILTER_MATERIALS.map((material) => (
-                <SelectItem key={material} value={material}>
-                  {material.replace("_", " ")}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            {/* Filter Material */}
+            <Select
+              value={material}
+              onValueChange={(value) =>
+                setMaterial(value as FilterMaterial | "all")
+              }
+            >
+              <SelectTrigger className="w-full sm:w-[160px]">
+                <SelectValue placeholder="Material" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Materials</SelectItem>
+                {FILTER_MATERIALS.map((material) => (
+                  <SelectItem key={material} value={material}>
+                    {material.replace("_", " ")}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
           <SearchInput
             value={searchTerm}
@@ -104,7 +106,6 @@ export default function FilterList() {
           value={view}
           options={viewOptions}
           onValueChange={setView}
-          className="border"
         />
       </div>
 

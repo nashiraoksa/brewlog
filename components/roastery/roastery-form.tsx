@@ -203,7 +203,7 @@ export default function RoasteryForm({
           <Button
             type="submit"
             disabled={createRoastery.isPending}
-            className="col-span-2"
+            className="w-full mt-4 md:col-span-2"
           >
             {createRoastery.isPending
               ? "Saving..."

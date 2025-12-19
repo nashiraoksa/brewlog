@@ -51,45 +51,47 @@ export default function DripperList() {
 
   return (
     <div className="space-y-6">
-      <div className="w-full flex justify-between items-center">
-        <div className="flex gap-4 flex-wrap">
-          {/* Dripper Type Filter */}
-          <Select
-            value={type}
-            onValueChange={(value) => setType(value as DripperType | "all")}
-          >
-            <SelectTrigger className="w-[160px]">
-              <SelectValue placeholder="Type" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Types</SelectItem>
-              {DRIPPER_TYPES.map((type) => (
-                <SelectItem key={type} value={type}>
-                  {type.replace("_", " ")}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+      <div className="w-full flex flex-col sm:flex-row justify-between items-end sm:items-center gap-4">
+        <div className="w-full flex flex-col sm:flex-row sm:justify-start gap-4">
+          <div className="w-full sm:w-fit flex gap-4">
+            {/* Dripper Type Filter */}
+            <Select
+              value={type}
+              onValueChange={(value) => setType(value as DripperType | "all")}
+            >
+              <SelectTrigger className="w-full sm:w-[160px]">
+                <SelectValue placeholder="Type" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Types</SelectItem>
+                {DRIPPER_TYPES.map((type) => (
+                  <SelectItem key={type} value={type}>
+                    {type.replace("_", " ")}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
 
-          {/* Dripper Material Filter */}
-          <Select
-            value={material}
-            onValueChange={(value) =>
-              setMaterial(value as DripperMaterial | "all")
-            }
-          >
-            <SelectTrigger className="w-[160px]">
-              <SelectValue placeholder="Material" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">All Materials</SelectItem>
-              {DRIPPER_MATERIALS.map((material) => (
-                <SelectItem key={material} value={material}>
-                  {material.replace("_", " ")}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+            {/* Dripper Material Filter */}
+            <Select
+              value={material}
+              onValueChange={(value) =>
+                setMaterial(value as DripperMaterial | "all")
+              }
+            >
+              <SelectTrigger className="w-full sm:w-[160px]">
+                <SelectValue placeholder="Material" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="all">All Materials</SelectItem>
+                {DRIPPER_MATERIALS.map((material) => (
+                  <SelectItem key={material} value={material}>
+                    {material.replace("_", " ")}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
           <SearchInput
             value={searchTerm}
@@ -104,7 +106,6 @@ export default function DripperList() {
           value={view}
           options={viewOptions}
           onValueChange={setView}
-          className="border"
         />
       </div>
 

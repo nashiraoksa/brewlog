@@ -24,9 +24,21 @@ export default function CreateRoasteryDialog() {
   };
   return (
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
+      {/* Desktop / Tablet trigger */}
       <DialogTrigger asChild>
-        <Button className="w-fit">
-          <PlusIcon className="w-4" /> Add Roastery
+        <Button className="hidden sm:inline-flex">
+          <PlusIcon className="h-4 w-4 mr-1" />
+          Add Roastery
+        </Button>
+      </DialogTrigger>
+
+      {/* Mobile FAB trigger */}
+      <DialogTrigger asChild>
+        <Button
+          size="icon"
+          className="sm:hidden fixed bottom-6 right-6 z-50 h-12 w-12 rounded-full shadow-lg"
+        >
+          <PlusIcon className="h-6 w-6" />
         </Button>
       </DialogTrigger>
 

@@ -40,15 +40,16 @@ export default function KettleList() {
 
   return (
     <div className="space-y-6">
-      <div className="w-full flex justify-between">
-        <div className="flex gap-4">
+      <div className="w-full flex flex-col sm:flex-row justify-between items-end sm:items-center gap-4">
+        <div className="w-full flex flex-col sm:flex-row gap-4">
           <Tabs
+            className="w-full sm:w-fit"
             value={type}
             onValueChange={(value) =>
               setType(value as "all" | "electric" | "stovetop")
             }
           >
-            <TabsList>
+            <TabsList className="w-full sm:w-fit">
               <TabsTrigger value="all">All</TabsTrigger>
               <TabsTrigger value="electric">Electric</TabsTrigger>
               <TabsTrigger value="stovetop">Stovetop</TabsTrigger>
@@ -66,7 +67,6 @@ export default function KettleList() {
           value={view}
           options={viewOptions}
           onValueChange={setView}
-          className="border"
         />
       </div>
 
