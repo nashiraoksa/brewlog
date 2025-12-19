@@ -16,10 +16,10 @@ export async function PATCH(
   }
 
   if (!id) {
-    return NextResponse.json({ error: "Missing grinder ID" });
+    return NextResponse.json({ error: "Missing dripper ID" });
   }
 
-  const existing = await prisma.grinder.findUnique({
+  const existing = await prisma.dripper.findUnique({
     where: { id },
   });
 
@@ -32,7 +32,7 @@ export async function PATCH(
 
   const body = await req.json();
 
-  const grinder = await prisma.grinder.update({
+  const dripper = await prisma.dripper.update({
     where: { id },
     data: {
       name: body.name,
@@ -42,7 +42,7 @@ export async function PATCH(
     },
   });
 
-  return NextResponse.json(grinder);
+  return NextResponse.json(dripper);
 }
 
 export async function DELETE(
@@ -58,10 +58,10 @@ export async function DELETE(
   }
 
   if (!id) {
-    return NextResponse.json({ error: "Missing grinder ID" }, { status: 400 });
+    return NextResponse.json({ error: "Missing dripper ID" }, { status: 400 });
   }
 
-  const existing = await prisma.grinder.findUnique({
+  const existing = await prisma.dripper.findUnique({
     where: { id },
   });
 
@@ -72,7 +72,7 @@ export async function DELETE(
     );
   }
 
-  await prisma.grinder.delete({
+  await prisma.dripper.delete({
     where: { id },
   });
 
