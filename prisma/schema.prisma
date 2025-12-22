@@ -31,6 +31,7 @@ model User {
   drippers          Dripper[]
   filters           Filter[]
   kettles           Kettle[]
+  scales            Scale[]
 }
 
 model Account {
@@ -229,6 +230,22 @@ model Kettle {
   id            String      @id @default(cuid())
   name          String
   type          KettleType
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Future relation:
+  // brews      Brew[]
+}
+
+model Scale {
+  id            String      @id @default(cuid())
+  name          String
   purchase_date DateTime?
   details       String?
 
