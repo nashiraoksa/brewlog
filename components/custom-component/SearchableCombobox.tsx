@@ -58,7 +58,7 @@ export function SearchableCombobox(props: SearchableComboboxProps) {
         </Button>
       </PopoverTrigger>
 
-      <PopoverContent className="w-full p-0" style={{ width: props.width }}>
+      <PopoverContent className="p-0 w-[var(--radix-popover-trigger-width)]">
         <Command>
           <CommandInput placeholder="Search roastery..." />
           <CommandList>
@@ -79,11 +79,7 @@ export function SearchableCombobox(props: SearchableComboboxProps) {
                       roastery.id === value ? "opacity-100" : "opacity-0"
                     )}
                   />
-                  <span
-                    className={`w-fit max-w-[220px] md:max-w-[120px] truncate`}
-                  >
-                    {roastery.name}
-                  </span>
+                  <span className={`w-full truncate`}>{roastery.name}</span>
                   {roastery.country ? (
                     <span className="ml-2 text-xs text-muted-foreground">
                       {roastery.country}

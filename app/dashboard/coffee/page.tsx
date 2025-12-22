@@ -1,16 +1,18 @@
 import DashboardLayout from "@/components/dashboard/dashboard-layout";
+import RightContent from "@/components/coffee/right-content";
 import CoffeeList from "@/components/coffee/coffee-list";
-import CoffeeForm from "@/components/coffee/coffee-form";
+import { SearchProvider } from "@/components/coffee/search-context";
 
 export default function CoffeePage() {
   return (
-    <DashboardLayout title="Coffee">
-      <CoffeeForm />
-
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold">Your Coffees</h2>
+    <SearchProvider>
+      <DashboardLayout
+        title="Coffee"
+        description="Your coffee coffees."
+        rightContent={<RightContent />}
+      >
         <CoffeeList />
-      </div>
-    </DashboardLayout>
+      </DashboardLayout>
+    </SearchProvider>
   );
 }

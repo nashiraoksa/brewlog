@@ -8,18 +8,15 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useState } from "react";
-import { Roastery } from "@/types/roastery";
-import { RoasteryDialogContent } from "./dialog-content";
+import { Coffee } from "@/types/coffee";
+import { CoffeeDialogContent } from "./dialog-content";
 
-interface EditRoasteryProps {
+interface EditCoffeeProps {
   trigger: React.ReactElement;
-  roastery: Roastery;
+  coffee: Coffee;
 }
 
-export default function EditRoasteryDialog({
-  trigger,
-  roastery,
-}: EditRoasteryProps) {
+export default function EditCoffeeDialog({ trigger, coffee }: EditCoffeeProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   const handleSuccess = () => {
@@ -36,16 +33,16 @@ export default function EditRoasteryDialog({
 
       <DialogContent className="sm:max-w-lg max-h-3/4 md:max-h-full overflow-y-auto">
         <DialogHeader>
-          <DialogTitle>Edit Roastery</DialogTitle>
+          <DialogTitle>Edit Coffee</DialogTitle>
         </DialogHeader>
 
-        <RoasteryDialogContent
+        <CoffeeDialogContent
           title="Edit Item"
-          description="Update the information for this existing roastery."
+          description="Update the information for this existing coffee."
           mode="edit"
           onSuccess={handleSuccess}
           onClose={handleClose}
-          initialData={roastery}
+          initialData={coffee}
         />
       </DialogContent>
     </Dialog>

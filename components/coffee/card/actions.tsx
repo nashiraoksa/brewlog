@@ -8,27 +8,37 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { IconDotsVertical } from "@tabler/icons-react";
-import { Roastery } from "@/types/roastery";
-import EditRoasteryDialog from "../edit-dialog";
 import { DeleteConfirm } from "../delete-confirm";
+import EditCoffeeDialog from "../edit-dialog";
+import { useDeleteCoffee } from "@/hooks/coffee/useDeleteCoffee";
+import { toast } from "sonner";
+import { Coffee } from "@/types/coffee";
 
-interface ActionsCellProps {
-  onDelete: (id: string) => void;
-  item: Roastery;
+interface ActionsProps {
+  item: Coffee;
 }
 
-export function Actions({ item, onDelete }: ActionsCellProps) {
+export function Actions({ item }: ActionsProps) {
+  const deleteCoffee = useDeleteCoffee();
+
+  const handleItemDelete = (itemId: string) => {
+    deleteCoffee.mutate(itemId, {
+      onError: (err: any) => {
+        toast.error(err.message);
+      },
+    });
+  };
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" className="h-8 w-8 p-0">
-          <span className="sr-only">Open menu</span>
-          <IconDotsVertical className="h-4 w-4" />
+        <Button variant="ghost" className="size-7">
+          <IconDotsVertical className="size-4" />
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <EditRoasteryDialog
-          roastery={item}
+        <EditCoffeeDialog
+          coffee={item}
           trigger={
             <DropdownMenuItem
               onSelect={(e) => {
@@ -42,7 +52,7 @@ export function Actions({ item, onDelete }: ActionsCellProps) {
         <DeleteConfirm
           itemId={item.id}
           itemName={item.name}
-          onDelete={onDelete}
+          onDelete={handleItemDelete}
           trigger={
             <DropdownMenuItem
               onSelect={(e) => {

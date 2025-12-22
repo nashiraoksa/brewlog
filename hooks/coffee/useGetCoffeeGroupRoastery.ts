@@ -15,7 +15,7 @@ import { CoffeeWithRoastery } from "@/types/coffee";
 
 type CoffeeView = "table" | "card";
 
-export async function fetchCoffee(view: CoffeeView) {
+async function fetchCoffee(view: CoffeeView) {
   const url = view === "card" ? "/api/coffees/roastery" : "/api/coffees/user";
 
   const res = await fetch(url);

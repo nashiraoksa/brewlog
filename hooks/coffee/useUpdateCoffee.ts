@@ -1,14 +1,15 @@
 "use client";
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { CoffeeUpdatePayload } from "@/types/coffee";
 
-export function useCreateCoffee() {
+export function useUpdateCoffee() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: any) => {
-      const res = await fetch("/api/coffees", {
-        method: "POST",
+    mutationFn: async ({ id, ...data }: CoffeeUpdatePayload) => {
+      const res = await fetch(`/api/coffees/${id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
@@ -18,12 +19,11 @@ export function useCreateCoffee() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || "Failed to create coffee");
+        throw new Error(err.error || "Failed to update coffee");
       }
 
       return res.json();
     },
-
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["coffee"] });
     },

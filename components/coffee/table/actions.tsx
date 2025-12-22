@@ -8,13 +8,13 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { IconDotsVertical } from "@tabler/icons-react";
-import { Roastery } from "@/types/roastery";
-import EditRoasteryDialog from "../edit-dialog";
+import { Coffee } from "@/types/coffee";
+import EditCoffeeDialog from "../edit-dialog";
 import { DeleteConfirm } from "../delete-confirm";
 
 interface ActionsCellProps {
   onDelete: (id: string) => void;
-  item: Roastery;
+  item: Coffee;
 }
 
 export function Actions({ item, onDelete }: ActionsCellProps) {
@@ -27,8 +27,8 @@ export function Actions({ item, onDelete }: ActionsCellProps) {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <EditRoasteryDialog
-          roastery={item}
+        <EditCoffeeDialog
+          coffee={item}
           trigger={
             <DropdownMenuItem
               onSelect={(e) => {

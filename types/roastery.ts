@@ -1,15 +1,5 @@
-// export interface Roastery {
-//   id: string;
-//   name: string;
-//   address: string;
-//   city: string;
-//   country: string;
-//   userId: string;
-//   createdAt: string;
-//   updatedAt: string;
-// }
-
 import z from "zod";
+import { Coffee } from "./coffee";
 
 export const RoasterySchema = z.object({
   name: z.string().min(1, "Name is required"),
@@ -24,4 +14,8 @@ export interface Roastery extends z.infer<typeof RoasterySchema> {
   id: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface RoasteryWithCoffee extends Roastery {
+  coffees: Coffee[];
 }

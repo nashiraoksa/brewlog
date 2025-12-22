@@ -31,14 +31,14 @@ const data = {
   },
   navMain: [
     {
+      title: "Brew Log",
+      url: "/dashboard/brews",
+      icon: FlaskConical,
+    },
+    {
       title: "Coffee Beans",
       url: "/dashboard/coffee",
       icon: Coffee,
-    },
-    {
-      title: "Brews",
-      url: "/dashboard/brews",
-      icon: FlaskConical,
     },
     {
       title: "Roastery",

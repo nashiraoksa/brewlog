@@ -1,19 +1,9 @@
 "use client";
 
-import { IconDotsVertical } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import EditRoasteryDialog from "../edit-dialog";
-
 import { COUNTRIES } from "@/lib/constants/countries";
-import { DeleteConfirm } from "../delete-confirm";
 import { Roastery } from "@/types/roastery";
+import { Actions } from "./actions";
 
 const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map((c) => [c.code, c.name]));
 
@@ -54,40 +44,7 @@ export const columns: ColumnDef<Roastery, any>[] = [
     cell: ({ row, table }) => {
       const onDelete = table.options.meta?.onDelete as (id: string) => void;
 
-      return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" size="icon">
-              <IconDotsVertical />
-            </Button>
-          </DropdownMenuTrigger>
-
-          <DropdownMenuContent align="end" className="w-32">
-            <EditRoasteryDialog
-              roastery={row.original}
-              trigger={
-                <DropdownMenuItem onSelect={(e) => e.preventDefault()}>
-                  Edit
-                </DropdownMenuItem>
-              }
-            />
-
-            <DeleteConfirm
-              itemId={row.original.id}
-              itemName={row.original.name}
-              onDelete={onDelete}
-              trigger={
-                <DropdownMenuItem
-                  onSelect={(e) => e.preventDefault()}
-                  variant="destructive"
-                >
-                  Delete
-                </DropdownMenuItem>
-              }
-            />
-          </DropdownMenuContent>
-        </DropdownMenu>
-      );
+      return <Actions item={row.original} onDelete={onDelete} />;
     },
   },
 ];
