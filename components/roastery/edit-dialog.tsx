@@ -10,6 +10,7 @@ import {
 import { useState } from "react";
 import RoasteryForm from "./roastery-form";
 import { Roastery } from "@/types/roastery";
+import { RoasteryDialogContent } from "./dialog-content";
 
 interface EditRoasteryProps {
   trigger: React.ReactElement;
@@ -39,7 +40,9 @@ export default function EditRoasteryDialog({
           <DialogTitle>Edit Roastery</DialogTitle>
         </DialogHeader>
 
-        <RoasteryForm
+        <RoasteryDialogContent
+          title="Edit Item"
+          description="Update the information for this existing roastery."
           mode="edit"
           onSuccess={handleSuccess}
           onClose={handleClose}

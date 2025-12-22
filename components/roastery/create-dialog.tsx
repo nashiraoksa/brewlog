@@ -9,8 +9,8 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
-import RoasteryForm from "./roastery-form";
 import { PlusIcon } from "lucide-react";
+import { RoasteryDialogContent } from "./dialog-content";
 
 export default function CreateRoasteryDialog() {
   const [isOpen, setIsOpen] = useState(false);
@@ -47,7 +47,9 @@ export default function CreateRoasteryDialog() {
           <DialogTitle>Add Roastery</DialogTitle>
         </DialogHeader>
 
-        <RoasteryForm
+        <RoasteryDialogContent
+          title="Create Roastery"
+          description="Add a new roastery by providing necessary info."
           mode="create"
           onSuccess={handleSuccess}
           onClose={handleClose}
