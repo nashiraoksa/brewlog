@@ -32,7 +32,7 @@ export function CoffeeDialogContent({
         <DialogDescription>{description}</DialogDescription>
       </DialogHeader>
 
-      <div className="grid gap-4">
+      <div className="max-h-[300px] md:max-h-[400px] overflow-y-auto">
         <CoffeeForm
           mode={mode}
           initialData={initialData}

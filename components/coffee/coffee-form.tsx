@@ -63,6 +63,9 @@ export default function CoffeeForm({
         roastery: initialData.roastery,
         country: initialData.country,
         name: initialData.name,
+        altitude: initialData.altitude,
+        varietals: initialData.varietals,
+        processings: initialData.processings,
         roast_level: initialData.roast_level,
         roast_date: initialData.roast_date
           ? new Date(initialData.roast_date)
@@ -75,6 +78,9 @@ export default function CoffeeForm({
         roastery: "",
         country: "",
         name: "",
+        altitude: 0,
+        varietals: "",
+        processings: "",
         roast_level: "LIGHT",
         roast_date: undefined,
         weight: 0,
@@ -156,7 +162,6 @@ export default function CoffeeForm({
             </FormItem>
           )}
         />
-
         {/* Country (auto-filled, display name) */}
         <FormField
           control={form.control}
@@ -177,7 +182,6 @@ export default function CoffeeForm({
             </FormItem>
           )}
         />
-
         {/* Name */}
         <FormField
           control={form.control}
@@ -187,6 +191,48 @@ export default function CoffeeForm({
               <FormLabel>
                 Name <span className="text-red-500">*</span>
               </FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        {/* Altitude */}
+        <FormField
+          control={form.control}
+          name="altitude"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Altitude</FormLabel>
+              <FormControl>
+                <Input type="number" {...field} />
+              </FormControl>
+            </FormItem>
+          )}
+        />
+        {/* Varietals */}
+        <FormField
+          control={form.control}
+          name="varietals"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Varietals</FormLabel>
+              <FormControl>
+                <Input {...field} />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+        {/* Processing */}
+        <FormField
+          control={form.control}
+          name="processings"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Processings</FormLabel>
               <FormControl>
                 <Input {...field} />
               </FormControl>
@@ -221,7 +267,6 @@ export default function CoffeeForm({
             </FormItem>
           )}
         />
-
         {/* Weight */}
         <FormField
           control={form.control}
@@ -237,7 +282,6 @@ export default function CoffeeForm({
             </FormItem>
           )}
         />
-
         {/* Roast date */}
         <FormField
           control={form.control}
@@ -271,7 +315,6 @@ export default function CoffeeForm({
             </FormItem>
           )}
         />
-
         {/* Price */}
         <FormField
           control={form.control}
@@ -293,13 +336,12 @@ export default function CoffeeForm({
             </FormItem>
           )}
         />
-
         {/* Flavor profile */}
         <FormField
           control={form.control}
           name="flavor_profile"
           render={({ field }) => (
-            <FormItem>
+            <FormItem className="md:col-span-2">
               <FormLabel>Flavor Profile</FormLabel>
               <FormControl>
                 <Input {...field} placeholder="chocolate, citrus, nutty" />
@@ -307,14 +349,15 @@ export default function CoffeeForm({
             </FormItem>
           )}
         />
-
-        <Button
-          type="submit"
-          className="col-span-2"
-          disabled={createCoffee.isPending}
-        >
-          {isEditMode ? "Update Coffee" : "Create Coffee"}
-        </Button>
+        <div className="sticky bottom-0 bg-background pt-4 md:col-span-2">
+          <Button
+            type="submit"
+            className="w-full"
+            disabled={createCoffee.isPending}
+          >
+            {isEditMode ? "Update Coffee" : "Create Coffee"}
+          </Button>
+        </div>
       </form>
     </Form>
   );

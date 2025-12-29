@@ -75,6 +75,9 @@ model Coffee {
   roastery        String
   country         String
   name            String
+  altitude        Int?
+  varietals       String?
+  processings     String?
   roast_level     RoastLevel
   roast_date      DateTime?
   weight          Int

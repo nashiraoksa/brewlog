@@ -35,12 +35,18 @@ export async function PATCH(
   const coffee = await prisma.coffee.update({
     where: { id },
     data: {
-      roastery: body.roastery,
+      roasteryRef: {
+        connect: { id: body.roastery },
+      },
       country: body.country,
       name: body.name,
+      altitude: body.altitude,
+      varietals: body.varietals ?? null,
+      processings: body.processings ?? null,
       roast_level: body.roast_level,
       roast_date: body.roast_date ? new Date(body.roast_date) : null,
       weight: body.weight,
+      price: body.price ?? null,
       flavor_profile: body.flavor_profile,
     },
   });

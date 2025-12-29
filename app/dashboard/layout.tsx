@@ -125,8 +125,8 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <QueryProvider>
         <SidebarProvider>
           <AppSidebar />
-          <SidebarInset>
-            <header className="flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b border-muted">
+          <SidebarInset className="min-w-0">
+            <header className="flex min-w-0 h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 border-b border-muted">
               <div className="w-full flex justify-between pr-4">
                 <div className="flex items-center gap-2 px-4">
                   <SidebarTrigger className="-ml-1" />
@@ -144,7 +144,9 @@ export default function Layout({ children }: { children: React.ReactNode }) {
               </div>
             </header>
 
-            <div className="flex flex-1 flex-col gap-4 p-8">{children}</div>
+            <div className="min-w-0 flex flex-1 flex-col gap-4 p-8">
+              {children}
+            </div>
           </SidebarInset>
         </SidebarProvider>
       </QueryProvider>

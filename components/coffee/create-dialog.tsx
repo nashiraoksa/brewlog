@@ -1,12 +1,6 @@
 "use client";
 
-import {
-  Dialog,
-  DialogTrigger,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { Dialog, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { PlusIcon } from "lucide-react";
@@ -42,20 +36,14 @@ export default function CreateCoffeeDialog() {
         </Button>
       </DialogTrigger>
 
-      <DialogContent className="sm:max-w-lg max-h-3/4 md:max-h-full overflow-y-auto">
-        <DialogHeader>
-          <DialogTitle>Add Coffee</DialogTitle>
-        </DialogHeader>
-
-        <CoffeeDialogContent
-          title="Create Coffee"
-          description="Add a new coffee by providing necessary info."
-          mode="create"
-          onSuccess={handleSuccess}
-          onClose={handleClose}
-          initialData={null}
-        />
-      </DialogContent>
+      <CoffeeDialogContent
+        title="Create Coffee"
+        description="Add a new coffee by providing necessary info."
+        mode="create"
+        onSuccess={handleSuccess}
+        onClose={handleClose}
+        initialData={null}
+      />
     </Dialog>
   );
 }

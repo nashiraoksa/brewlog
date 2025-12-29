@@ -5,6 +5,10 @@ export const CoffeeSchema = z.object({
   country: z.string().min(1, "Country is required"),
   name: z.string().min(1, "Name is required"),
 
+  altitude: z.coerce.number().positive("Altitude must be positive").optional(),
+  varietals: z.string().optional(),
+  processings: z.string().optional(),
+
   roast_level: z.enum(["LIGHT", "MEDIUM", "MEDIUM_DARK", "DARK"]),
   roast_date: z.date().optional(),
 
@@ -20,22 +24,14 @@ export const CoffeeSchema = z.object({
 
 export type CoffeeFormValues = z.infer<typeof CoffeeSchema>;
 
-// export interface CoffeeUpdatePayload extends z.infer<typeof CoffeeSchema> {
-//   id: string;
-// }
-
-// export interface Coffee extends z.infer<typeof CoffeeSchema> {
-//   id: string;
-//   createdAt: Date;
-//   updatedAt: Date;
-// }
-
-// types/coffee.ts
 export interface Coffee {
   id: string;
   roastery: string;
   country: string;
   name: string;
+  altitude?: number;
+  varietals?: string;
+  processings?: string;
   roast_level: "LIGHT" | "MEDIUM" | "MEDIUM_DARK" | "DARK";
   roast_date?: string;
   weight: number;

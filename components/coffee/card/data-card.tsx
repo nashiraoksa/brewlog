@@ -8,16 +8,32 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Actions } from "./actions";
 import { COUNTRIES, countryCodeToFlag } from "@/lib/constants/countries";
-import { CoffeeWithRoastery } from "@/types/coffee";
 import { formatRupiah } from "@/lib/helper/rupiahFormatter";
 
 const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map((c) => [c.code, c.name]));
 
 export default function DataCard({ data }: { data: any[] }) {
+  const getTypeVariant = (
+    roast_level: "LIGHT" | "MEDIUM" | "MEDIUM_DARK" | "DARK"
+  ) => {
+    switch (roast_level) {
+      case "LIGHT":
+        return "secondary";
+      case "MEDIUM":
+        return "default";
+      case "MEDIUM_DARK":
+        return "outline";
+      case "DARK":
+        return "default";
+      default:
+        return "outline";
+    }
+  };
+
   return (
     <section className="w-full flex flex-col gap-4">
       {data.map((item) => (
-        <section className="w-full space-y-2">
+        <section key={item.id} className="w-full space-y-2">
           <h4 className="text-xl">
             {item.name} {countryCodeToFlag(item.country)}
           </h4>
@@ -36,13 +52,32 @@ export default function DataCard({ data }: { data: any[] }) {
                     <Actions item={item} />
                   </div>
                   <CardDescription>
-                    <Badge variant="default" className="flex-shrink-0">
+                    <Badge
+                      variant={getTypeVariant(item.roast_level)}
+                      className="flex-shrink-0"
+                    >
                       {item.roast_level}
                     </Badge>
                   </CardDescription>
                 </CardHeader>
 
                 <CardContent className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Altitude:</span>
+                    <span className="font-medium">
+                      {item.altitude ? `${item.altitude} masl` : "-"}
+                    </span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Varietals:</span>
+                    <span className="font-medium">{item.varietals || "-"}</span>
+                  </div>
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Processings:</span>
+                    <span className="font-medium">
+                      {item.processings || "-"}
+                    </span>
+                  </div>
                   <div className="flex justify-between text-sm">
                     <span className="text-muted-foreground">Country:</span>
                     <span className="font-medium">

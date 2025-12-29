@@ -35,6 +35,30 @@ export const columns: ColumnDef<CoffeeWithRoastery>[] = [
     },
   },
   {
+    accessorKey: "altitude",
+    header: "Altitude",
+    cell: ({ getValue }) => {
+      const altitude = getValue<number | undefined>();
+      return altitude ? `${altitude} masl` : "-";
+    },
+  },
+  {
+    accessorKey: "varietals",
+    header: "Varietals",
+    cell: ({ getValue }) => {
+      const value = getValue<string | undefined>();
+      return value || "-";
+    },
+  },
+  {
+    accessorKey: "processings",
+    header: "Processings",
+    cell: ({ getValue }) => {
+      const value = getValue<string | undefined>();
+      return value || "-";
+    },
+  },
+  {
     accessorKey: "roast_level",
     header: "Roast",
     cell: ({ getValue }) => {
@@ -52,7 +76,7 @@ export const columns: ColumnDef<CoffeeWithRoastery>[] = [
   },
   {
     accessorKey: "weight",
-    header: "Weight (g)",
+    header: "Weight",
     cell: ({ getValue }) => {
       const weight = getValue<number>();
       return `${weight} g`;
