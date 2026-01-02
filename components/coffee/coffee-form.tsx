@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -39,6 +39,7 @@ import { Calendar } from "@/components/ui/calendar";
 import { SearchableCombobox } from "../custom-component/SearchableCombobox";
 import { countryByCode } from "@/lib/constants/countries";
 import { cn } from "@/lib/utils";
+import { TimePicker } from "../custom-component/TimePicker";
 
 interface CoffeeFormProps {
   mode: "create" | "edit";
@@ -57,6 +58,8 @@ export default function CoffeeForm({
   const { roasteries, isLoading, isError } = useGetRoastery();
 
   const isEditMode = mode === "edit";
+
+  const [time, setTime] = useState({ minutes: 1, seconds: 30 });
 
   const defaultValues: CoffeeFormValues = initialData
     ? {
@@ -137,6 +140,8 @@ export default function CoffeeForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 md:grid grid-cols-2 gap-4"
       >
+        <TimePicker value={time} onChange={setTime} maxMinutes={59} />
+
         {/* Roastery */}
         <FormField
           control={form.control}

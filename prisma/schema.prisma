@@ -32,6 +32,8 @@ model User {
   filters           Filter[]
   kettles           Kettle[]
   scales            Scale[]
+
+  brews             Brew[]
 }
 
 model Account {
@@ -84,9 +86,11 @@ model Coffee {
   price           Int? 
   flavor_profile  String[]
 
-  user User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  roasteryRef Roastery @relation(fields: [roastery], references: [id])
+  roasteryRef     Roastery @relation(fields: [roastery], references: [id])
+
+  brews           Brew[]
 }
 
 model Roastery {
@@ -123,8 +127,7 @@ model Grinder {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Future relation:
-  // brews      Brew[]
+  brews         Brew[]
 }
 
 enum EspressoMachineType {
@@ -145,8 +148,7 @@ model EspressoMachine {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Future relation:
-  // brews      Brew[]
+  brews      Brew[]
 }
 
 enum DripperType {
@@ -183,8 +185,7 @@ model Dripper {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Future relation:
-  // brews      Brew[]
+  brews      Brew[]
 }
 
 enum FilterType {
@@ -220,8 +221,7 @@ model Filter {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Future relation:
-  // brews      Brew[]
+  brews         Brew[]
 }
 
 enum KettleType {
@@ -242,8 +242,7 @@ model Kettle {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Future relation:
-  // brews      Brew[]
+  brews         Brew[]
 }
 
 model Scale {
@@ -258,6 +257,78 @@ model Scale {
   userId        String
   user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  // Future relation:
-  // brews      Brew[]
+  brews         Brew[]
+}
+
+model Brew {
+  id                 String   @id @default(cuid())
+
+  date               DateTime?
+
+  method             String
+
+  grindSetting       String?
+
+  coffeeAmount       Int
+  waterAmount        Int
+  waterTemperature   Int
+  temperatureMetric  String
+
+  brewMinutes        Int
+  brewSeconds        Int
+
+  steps              Step[]  @relation("BrewSteps")
+
+  aroma              Int
+  sweetness          Int
+  acidity            Int
+  bitterness         Int 
+  body               Int 
+
+  overall            Int
+
+  notes              String?
+
+  coffeeId           String?
+  coffee             Coffee? @relation(fields: [coffeeId], references: [id])
+
+
+  grinderId          String?
+  grinder            Grinder?          @relation(fields: [grinderId], references: [id])
+
+  dripperId          String?
+  dripper            Dripper?          @relation(fields: [dripperId], references: [id])
+
+  espressoMachineId  String?
+  espressoMachine    EspressoMachine?  @relation(fields: [espressoMachineId], references: [id])
+
+  filterId           String?
+  filter             Filter?           @relation(fields: [filterId], references: [id])
+
+  kettleId           String?
+  kettle             Kettle?           @relation(fields: [kettleId], references: [id])
+
+  scaleId            String?
+  scale              Scale?            @relation(fields: [scaleId], references: [id])
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  userId             String
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Step {
+  id       Int    @id @default(autoincrement())
+
+  brew     Brew   @relation("BrewSteps", fields: [brewId], references: [id])
+  brewId   String   
+
+  order    Int
+  session  String
+  water    Int
+  time     Int
+
+  @@unique([brewId, order])   
+  @@index([brewId, order])
 }
