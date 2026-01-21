@@ -254,3 +254,13 @@ export const COUNTRIES: CountryOption[] = [
   { code: "ZM", name: "Zambia" },
   { code: "ZW", name: "Zimbabwe" },
 ];
+
+export const countryByCode = new Map(COUNTRIES.map((c) => [c.code, c.name]));
+
+export function countryCodeToFlag(code?: string) {
+  if (!code) return "🏳️";
+
+  return code
+    .toUpperCase()
+    .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
+}

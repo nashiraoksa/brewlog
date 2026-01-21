@@ -1,12 +1,13 @@
 "use client";
 
+import { RoasteryFormValues } from "@/types/roastery";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export function useCreateRoastery() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: any) => {
+    mutationFn: async (data: RoasteryFormValues) => {
       const res = await fetch("/api/roastery", {
         method: "POST",
         headers: {
@@ -18,7 +19,7 @@ export function useCreateRoastery() {
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || "Failed to create coffee");
+        throw new Error(err.error || "Failed to create roastery");
       }
 
       return res.json();

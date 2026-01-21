@@ -15,17 +15,25 @@ datasource db {
 }
 
 model User {
-  id            String   @id @default(cuid())
-  name          String?
-  email         String?  @unique
-  emailVerified DateTime?
-  password      String?
-  image         String?
+  id                String   @id @default(cuid())
+  name              String?
+  email             String?  @unique
+  emailVerified     DateTime?
+  password          String?
+  image             String?
 
-  accounts      Account[]
-  sessions      Session[]
-  coffees       Coffee[]
-  roastery      Roastery[]
+  accounts          Account[]
+  sessions          Session[]
+  coffees           Coffee[]
+  roastery          Roastery[]
+  grinders          Grinder[]
+  espressoMachines  EspressoMachine[]
+  drippers          Dripper[]
+  filters           Filter[]
+  kettles           Kettle[]
+  scales            Scale[]
+
+  brews             Brew[]
 }
 
 model Account {
@@ -69,15 +77,20 @@ model Coffee {
   roastery        String
   country         String
   name            String
+  altitude        Int?
+  varietals       String?
+  processings     String?
   roast_level     RoastLevel
   roast_date      DateTime?
   weight          Int
   price           Int? 
   flavor_profile  String[]
 
-  user User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user            User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  roasteryRef Roastery @relation(fields: [roastery], references: [id])
+  roasteryRef     Roastery @relation(fields: [roastery], references: [id])
+
+  brews           Brew[]
 }
 
 model Roastery {
@@ -94,4 +107,228 @@ model Roastery {
   user User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   coffees Coffee[]
+}
+
+enum GrinderType {
+  MANUAL
+  AUTOMATIC
+}
+
+model Grinder {
+  id            String      @id @default(cuid())
+  name          String
+  type          GrinderType
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  brews         Brew[]
+}
+
+enum EspressoMachineType {
+  LEVER
+  AUTOMATIC
+}
+
+model EspressoMachine {
+  id            String      @id @default(cuid())
+  name          String
+  type          EspressoMachineType
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  brews      Brew[]
+}
+
+enum DripperType {
+  CONE
+  FLATBOTTOM
+  WEDGE
+  NOBYPASS
+  IMMERSION
+  HYBRID
+  OTHER
+}
+
+enum DripperMaterial {
+  CERAMIC
+  GLASS
+  PLASTIC
+  STAINLESS
+  COPPER
+  WOOD
+  OTHER
+}
+
+model Dripper {
+  id            String      @id @default(cuid())
+  name          String
+  type          DripperType
+  material      DripperMaterial
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  brews      Brew[]
+}
+
+enum FilterType {
+  CONE
+  FLATCONE
+  DISK
+  WAVY
+  BASKET
+  SACK
+  OTHER
+}
+
+enum FilterMaterial {
+  PAPER
+  UNBLEACHEDPAPER
+  CLOTH
+  PLASTIC
+  METAL
+  OTHER
+}
+
+model Filter {
+  id            String      @id @default(cuid())
+  name          String
+  type          FilterType
+  material      FilterMaterial
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  brews         Brew[]
+}
+
+enum KettleType {
+  ELECTRIC
+  STOVETOP
+}
+
+model Kettle {
+  id            String      @id @default(cuid())
+  name          String
+  type          KettleType
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  brews         Brew[]
+}
+
+model Scale {
+  id            String      @id @default(cuid())
+  name          String
+  purchase_date DateTime?
+  details       String?
+
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  userId        String
+  user          User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  brews         Brew[]
+}
+
+model Brew {
+  id                 String   @id @default(cuid())
+
+  date               DateTime?
+
+  method             String
+
+  grindSetting       String?
+
+  coffeeAmount       Int
+  waterAmount        Int
+  waterTemperature   Int
+  temperatureMetric  String
+
+  brewMinutes        Int
+  brewSeconds        Int
+
+  steps              Step[]  @relation("BrewSteps")
+
+  aroma              Int
+  sweetness          Int
+  acidity            Int
+  bitterness         Int 
+  body               Int 
+
+  overall            Int
+
+  notes              String?
+
+  coffeeId           String?
+  coffee             Coffee? @relation(fields: [coffeeId], references: [id])
+
+
+  grinderId          String?
+  grinder            Grinder?          @relation(fields: [grinderId], references: [id])
+
+  dripperId          String?
+  dripper            Dripper?          @relation(fields: [dripperId], references: [id])
+
+  espressoMachineId  String?
+  espressoMachine    EspressoMachine?  @relation(fields: [espressoMachineId], references: [id])
+
+  filterId           String?
+  filter             Filter?           @relation(fields: [filterId], references: [id])
+
+  kettleId           String?
+  kettle             Kettle?           @relation(fields: [kettleId], references: [id])
+
+  scaleId            String?
+  scale              Scale?            @relation(fields: [scaleId], references: [id])
+
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  userId             String
+  user               User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Step {
+  id       Int    @id @default(autoincrement())
+
+  brew     Brew   @relation("BrewSteps", fields: [brewId], references: [id])
+  brewId   String   
+
+  order    Int
+  session  String
+  water    Int
+  time     Int
+
+  @@unique([brewId, order])   
+  @@index([brewId, order])
 }

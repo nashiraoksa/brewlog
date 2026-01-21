@@ -1,16 +1,11 @@
 "use client";
 
-import { IconDotsVertical } from "@tabler/icons-react";
 import { ColumnDef } from "@tanstack/react-table";
-import { Button } from "@/components/ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+import { COUNTRIES } from "@/lib/constants/countries";
 import { Roastery } from "@/types/roastery";
+import { Actions } from "./actions";
+
+const COUNTRY_MAP = Object.fromEntries(COUNTRIES.map((c) => [c.code, c.name]));
 
 export const columns: ColumnDef<Roastery, any>[] = [
   {
@@ -37,32 +32,19 @@ export const columns: ColumnDef<Roastery, any>[] = [
     header: "City",
   },
   {
-    id: "country",
-    accessorFn: (row) => row.country,
+    accessorKey: "country",
     header: "Country",
+    cell: ({ getValue }) => {
+      const code = getValue<string>();
+      return COUNTRY_MAP[code] ?? code;
+    },
   },
   {
     id: "actions",
-    cell: () => (
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild>
-          <Button
-            variant="ghost"
-            className="data-[state=open]:bg-muted text-muted-foreground flex size-8"
-            size="icon"
-          >
-            <IconDotsVertical />
-            <span className="sr-only">Open menu</span>
-          </Button>
-        </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-32">
-          <DropdownMenuItem>Edit</DropdownMenuItem>
-          <DropdownMenuItem>Make a copy</DropdownMenuItem>
-          <DropdownMenuItem>Favorite</DropdownMenuItem>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem variant="destructive">Delete</DropdownMenuItem>
-        </DropdownMenuContent>
-      </DropdownMenu>
-    ),
+    cell: ({ row, table }) => {
+      const onDelete = table.options.meta?.onDelete as (id: string) => void;
+
+      return <Actions item={row.original} onDelete={onDelete} />;
+    },
   },
 ];

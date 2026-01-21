@@ -25,7 +25,7 @@ export function useCreateCoffee() {
     },
 
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["coffees"] });
+      queryClient.invalidateQueries({ queryKey: ["coffee"] });
     },
   });
 }

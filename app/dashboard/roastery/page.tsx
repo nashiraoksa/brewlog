@@ -1,19 +1,18 @@
 import DashboardLayout from "@/components/dashboard/dashboard-layout";
-import RoasteryForm from "@/components/roastery/roastery-form";
-// import CoffeeList from "@/components/coffee/coffee-list";
-// import CoffeeForm from "@/components/coffee/coffee-form";
+import RightContent from "@/components/roastery/right-content";
 import RoasteryList from "@/components/roastery/roastery-list";
+import { SearchProvider } from "@/components/roastery/search-context";
 
 export default function CoffeePage() {
   return (
-    <DashboardLayout title="Roastery">
-      {/* <CoffeeForm /> */}
-      {/* <RoasteryForm /> */}
-
-      {/* <div className="space-y-4">
-        <h2 className="text-xl font-bold">Coffee Roastery</h2> */}
-      <RoasteryList />
-      {/* </div> */}
-    </DashboardLayout>
+    <SearchProvider>
+      <DashboardLayout
+        title="Roastery"
+        description="Your coffee roasteries."
+        rightContent={<RightContent />}
+      >
+        <RoasteryList />
+      </DashboardLayout>
+    </SearchProvider>
   );
 }

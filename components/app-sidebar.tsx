@@ -6,8 +6,8 @@ import {
   Map,
   PieChart,
   Settings2,
+  Grape,
   Coffee,
-  FlaskConical,
   Heater,
 } from "lucide-react";
 
@@ -31,14 +31,14 @@ const data = {
   },
   navMain: [
     {
-      title: "Coffee Beans",
-      url: "/dashboard/coffee",
+      title: "Brew Log",
+      url: "/dashboard/brews",
       icon: Coffee,
     },
     {
-      title: "Brews",
-      url: "/dashboard/brews",
-      icon: FlaskConical,
+      title: "Coffee Beans",
+      url: "/dashboard/coffee",
+      icon: Grape,
     },
     {
       title: "Roastery",
@@ -62,6 +62,10 @@ const data = {
         {
           title: "Dripper",
           url: "/dashboard/equipments/dripper",
+        },
+        {
+          title: "Filter",
+          url: "/dashboard/equipments/filter",
         },
         {
           title: "Scale",
