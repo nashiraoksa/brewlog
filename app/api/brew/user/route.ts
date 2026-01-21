@@ -28,6 +28,7 @@ export async function GET() {
         filter: true,
         kettle: true,
         scale: true,
+        coffee: true,
       },
     });
 

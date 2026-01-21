@@ -1,9 +1,9 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { Brew } from "@/types/brew";
+import { BrewWithCoffee } from "@/types/brew";
 
-async function fetchBrew(): Promise<Brew[]> {
+async function fetchBrew(): Promise<BrewWithCoffee[]> {
   const res = await fetch("/api/brew/user");
 
   if (!res.ok) {
@@ -14,7 +14,7 @@ async function fetchBrew(): Promise<Brew[]> {
 }
 
 export function useGetBrew() {
-  const { data, isLoading, isError, error } = useQuery<Brew[]>({
+  const { data, isLoading, isError, error } = useQuery<BrewWithCoffee[]>({
     queryKey: ["brew"],
     queryFn: fetchBrew,
     staleTime: 5 * 60 * 1000,

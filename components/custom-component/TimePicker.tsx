@@ -23,9 +23,9 @@ export function TimePicker({
   maxMinutes?: number;
 }) {
   return (
-    <div className="flex items-end gap-3">
+    <div className="flex items-end gap-2">
       {/* Minutes */}
-      <div className="grid gap-1">
+      <div className="w-full grid gap-2">
         <Label>Minutes</Label>
         <Select
           value={String(value.minutes)}
@@ -36,7 +36,7 @@ export function TimePicker({
             })
           }
         >
-          <SelectTrigger className="w-24">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="00" />
           </SelectTrigger>
           <SelectContent className="max-h-[180px]">
@@ -54,7 +54,7 @@ export function TimePicker({
       <span className="pb-2 text-lg font-medium">:</span>
 
       {/* Seconds */}
-      <div className="grid gap-1">
+      <div className="w-full grid gap-2">
         <Label>Seconds</Label>
         <Select
           value={String(value.seconds)}
@@ -65,7 +65,7 @@ export function TimePicker({
             })
           }
         >
-          <SelectTrigger className="w-24">
+          <SelectTrigger className="w-full">
             <SelectValue placeholder="00" />
           </SelectTrigger>
           <SelectContent className="max-h-[180px]">

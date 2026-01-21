@@ -2,9 +2,8 @@
 
 import { useCreateRoastery } from "@/hooks/roastery/useCreateRoastery";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm, type Resolver } from "react-hook-form";
-import z from "zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 
@@ -187,7 +186,7 @@ export default function RoasteryForm({
                     </SelectTrigger>
                   </FormControl>
 
-                  <SelectContent className="w-full md:w-[220px] max-h-[180px]">
+                  <SelectContent className="max-h-[180px] w-[var(--radix-select-trigger-width)]">
                     {COUNTRIES.map((country) => (
                       <SelectItem key={country.code} value={country.code}>
                         {country.name}

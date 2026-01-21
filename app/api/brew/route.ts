@@ -18,6 +18,7 @@ export async function GET() {
         filter: true,
         kettle: true,
         scale: true,
+        coffee: true,
       },
     });
 
@@ -42,6 +43,7 @@ export async function POST(req: Request) {
       data: {
         // ---------- Required fields ----------
         method: body.method,
+        coffeeId: body.coffeeId,
         coffeeAmount: body.coffeeAmount,
         waterAmount: body.waterAmount,
         waterTemperature: body.waterTemperature,
@@ -95,6 +97,7 @@ export async function POST(req: Request) {
         filter: true,
         kettle: true,
         scale: true,
+        coffee: true,
       },
     });
 

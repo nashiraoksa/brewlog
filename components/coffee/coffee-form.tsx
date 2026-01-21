@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useForm, type Resolver } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { format } from "date-fns";
@@ -36,10 +36,8 @@ import {
 } from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
 
-import { SearchableCombobox } from "../custom-component/SearchableCombobox";
 import { countryByCode } from "@/lib/constants/countries";
 import { cn } from "@/lib/utils";
-import { TimePicker } from "../custom-component/TimePicker";
 
 interface CoffeeFormProps {
   mode: "create" | "edit";
@@ -58,8 +56,6 @@ export default function CoffeeForm({
   const { roasteries, isLoading, isError } = useGetRoastery();
 
   const isEditMode = mode === "edit";
-
-  const [time, setTime] = useState({ minutes: 1, seconds: 30 });
 
   const defaultValues: CoffeeFormValues = initialData
     ? {
@@ -140,33 +136,53 @@ export default function CoffeeForm({
         onSubmit={form.handleSubmit(onSubmit)}
         className="space-y-4 md:grid grid-cols-2 gap-4"
       >
-        <TimePicker value={time} onChange={setTime} maxMinutes={59} />
-
         {/* Roastery */}
+
         <FormField
           control={form.control}
           name="roastery"
           render={({ field }) => (
-            <FormItem className="flex flex-col">
+            <FormItem>
               <FormLabel>
                 Roastery <span className="text-red-500">*</span>
               </FormLabel>
-              <SearchableCombobox
-                roasteries={roasteries}
+
+              <Select
                 value={field.value}
-                disabled={isLoading || isError}
-                onChange={(value) => {
+                onValueChange={(value) => {
                   field.onChange(value);
-                  const selected = roasteries.find((r) => r.id === value);
+
+                  const selected = roasteries.find(
+                    (roastery) => roastery.id === value
+                  );
+
                   if (selected?.country) {
-                    form.setValue("country", selected.country);
+                    form.setValue("country", selected.country, {
+                      shouldValidate: true,
+                      shouldDirty: true,
+                    });
                   }
                 }}
-              />
+              >
+                <FormControl>
+                  <SelectTrigger className="w-full">
+                    <SelectValue placeholder="Select country" />
+                  </SelectTrigger>
+                </FormControl>
+
+                <SelectContent className="max-h-[180px] w-[var(--radix-select-trigger-width)]">
+                  {roasteries.map((roastery) => (
+                    <SelectItem key={roastery.id} value={roastery.id}>
+                      {roastery.name}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
               <FormMessage />
             </FormItem>
           )}
         />
+
         {/* Country (auto-filled, display name) */}
         <FormField
           control={form.control}

@@ -11,7 +11,7 @@ import SearchInput from "../custom-component/SearchInput";
 import { useSearch } from "./search-context";
 import { useQuery } from "@tanstack/react-query";
 import { RoasteryWithCoffee } from "@/types/roastery";
-import { Coffee, CoffeeWithRoastery } from "@/types/coffee";
+import { CoffeeWithRoastery } from "@/types/coffee";
 
 export default function CoffeeList() {
   const viewOptions = [
@@ -34,7 +34,7 @@ export default function CoffeeList() {
             const roasteryMatch = roastery.name.toLowerCase().includes(term);
 
             const filteredCoffees = roasteryMatch
-              ? roastery.coffees ?? [] // 👈 show all coffees
+              ? roastery.coffees ?? []
               : (roastery.coffees ?? []).filter((coffee) =>
                   coffee.name.toLowerCase().includes(term)
                 );

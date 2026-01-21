@@ -1,18 +1,12 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { GeistSans, GeistMono } from "geist/font";
+
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { Toaster } from "sonner";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
+export const geistSans = GeistSans;
+export const geistMono = GeistMono;
 
 export const metadata: Metadata = {
   title: "BrewLog",
@@ -25,7 +19,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${geistSans.variable} ${geistMono.variable}`}
+    >
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

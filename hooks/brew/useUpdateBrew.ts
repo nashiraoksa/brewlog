@@ -2,31 +2,30 @@
 
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export function useCreateBrew() {
+export function useUpdateBrew() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: async (data: any) => {
-      const res = await fetch("/api/brew", {
-        method: "POST",
+    mutationFn: async ({ id, ...data }: any) => {
+      const res = await fetch(`/api/brew/${id}`, {
+        method: "PATCH",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include",
         body: JSON.stringify(data),
+        credentials: "include",
       });
 
       if (!res.ok) {
         const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || "Failed to create brew");
+        throw new Error(err.error || "Failed to update brew");
       }
 
       return res.json();
     },
-
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["brew"] });
+    onSuccess: (_data, variables) => {
       queryClient.invalidateQueries({ queryKey: ["brews"] });
+      queryClient.invalidateQueries({ queryKey: ["brew"] });
     },
   });
 }

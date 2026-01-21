@@ -1,6 +1,12 @@
-import { Step } from "./step";
+import { EspressoMachine } from "@/lib/generated/prisma/client";
+import { Coffee } from "./coffee";
+import { Dripper } from "./dripper";
+import { Grinder } from "./grinder";
 
 import z from "zod";
+import { Scale } from "./scale";
+import { Filter } from "./filter";
+import { Kettle } from "./kettle";
 
 export const StepSchema = z.object({
   order: z.number(),
@@ -9,10 +15,8 @@ export const StepSchema = z.object({
   time: z.number(),
 });
 
-// import { z } from "zod";
-
 export const BrewSchema = z.object({
-  date: z.string().nullable().optional(),
+  date: z.coerce.date().optional(),
 
   method: z.string().min(1, "Method is required"),
 
@@ -43,6 +47,8 @@ export const BrewSchema = z.object({
   kettleId: z.string().nullable().optional(),
   scaleId: z.string().nullable().optional(),
 
+  coffeeId: z.string().nullable().optional(),
+
   steps: z.array(StepSchema).default([]),
 });
 
@@ -54,29 +60,12 @@ export type Brew = BrewFormValues & {
   updatedAt: string;
 };
 
-// export type Brew = {
-//   id: string;
-//   date: string | null;
-//   method: string;
-//   grindSetting?: string | null;
-//   coffeeAmount: number;
-//   waterAmount: number;
-//   waterTemperature: number;
-//   temperatureMetric: string;
-//   brewMinutes: number;
-//   brewSeconds: number;
-
-//   aroma: number;
-//   sweetness: number;
-//   acidity: number;
-//   bitterness: number;
-//   body: number;
-//   overall: number;
-
-//   notes?: string | null;
-
-//   steps: Step[];
-
-//   createdAt: string;
-//   updatedAt: string;
-// };
+export interface BrewWithCoffee extends Brew {
+  coffee: Coffee;
+  grinder?: Grinder;
+  dripper?: Dripper;
+  espressoMachine?: EspressoMachine;
+  scale?: Scale;
+  filter?: Filter;
+  kettle?: Kettle;
+}

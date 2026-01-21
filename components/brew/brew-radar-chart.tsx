@@ -1,9 +1,12 @@
 "use client";
 
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
-
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-
+import {
+  PolarAngleAxis,
+  PolarGrid,
+  PolarRadiusAxis,
+  Radar,
+  RadarChart,
+} from "recharts";
 import {
   ChartContainer,
   ChartTooltip,
@@ -17,6 +20,8 @@ type Props = {
   acidity: number;
   bitterness: number;
   body: number;
+  maxHeight?: string;
+  minHeight?: string;
 };
 
 const chartConfig = {
@@ -32,6 +37,8 @@ export function BrewRadarChart({
   acidity,
   bitterness,
   body,
+  maxHeight,
+  minHeight,
 }: Props) {
   const data = [
     { attribute: "Aroma", score: aroma },
@@ -41,36 +48,32 @@ export function BrewRadarChart({
     { attribute: "Body", score: body },
   ];
 
+  const heightClasses =
+    minHeight || maxHeight
+      ? `${minHeight ?? ""} ${maxHeight ?? ""}`
+      : "min-h-[300px] max-h-[300px] sm:min-h-[350px] sm:max-h-[350px] md:min-h-[370px] md:max-h-[370px]";
+
   return (
-    <Card>
-      <CardHeader className="pb-2">
-        <CardTitle className="text-base font-medium">Brew Profile</CardTitle>
-      </CardHeader>
-
-      <CardContent>
-        <ChartContainer
-          config={chartConfig}
-          className="mx-auto aspect-square max-h-[300px] overflow-visible"
-        >
-          <RadarChart
-            data={data}
-            outerRadius="80%"
-            margin={{ top: 20, right: 30, bottom: 20, left: 30 }}
-          >
-            <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
-
-            <PolarGrid />
-
-            <PolarAngleAxis dataKey="attribute" />
-
-            <Radar
-              dataKey="score"
-              fill="var(--color-score)"
-              fillOpacity={0.6}
-            />
-          </RadarChart>
-        </ChartContainer>
-      </CardContent>
-    </Card>
+    <ChartContainer
+      config={chartConfig}
+      className={`mx-auto aspect-square overflow-visible ${heightClasses}`}
+    >
+      <RadarChart
+        data={data}
+        outerRadius="90%"
+        margin={{ top: 0, right: 50, bottom: 0, left: 30 }}
+      >
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
+        <PolarGrid />
+        <PolarAngleAxis dataKey="attribute" />
+        <PolarRadiusAxis
+          domain={[0, 10]}
+          tick={false}
+          tickCount={10}
+          axisLine={false}
+        />
+        <Radar dataKey="score" fill="var(--color-score)" fillOpacity={0.6} />
+      </RadarChart>
+    </ChartContainer>
   );
 }

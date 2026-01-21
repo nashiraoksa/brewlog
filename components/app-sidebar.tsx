@@ -6,8 +6,8 @@ import {
   Map,
   PieChart,
   Settings2,
+  Grape,
   Coffee,
-  FlaskConical,
   Heater,
 } from "lucide-react";
 
@@ -33,12 +33,12 @@ const data = {
     {
       title: "Brew Log",
       url: "/dashboard/brews",
-      icon: FlaskConical,
+      icon: Coffee,
     },
     {
       title: "Coffee Beans",
       url: "/dashboard/coffee",
-      icon: Coffee,
+      icon: Grape,
     },
     {
       title: "Roastery",
